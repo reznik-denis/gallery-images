@@ -17,19 +17,18 @@ const galerysEl = ({ preview, original, description }) => {
 };
 
 const makeGaleryElementMorkup = gallerysItems.map(galerysEl).join('');
+const refs = {
+    gallery: document.querySelector('ul.js-gallery'),
+    modal: document.querySelector('div.lightbox'),
+    image: document.querySelector('img.lightbox__image'),
+    overley: document.querySelector('div.lightbox__overlay'),
+    closeModal: document.querySelector('.lightbox__button'),
+};
 
-const GalleryEl = document.querySelector('ul.js-gallery');
-const modalOnClick = document.querySelector('div.lightbox');
-const imageItemGallery = document.querySelector('img.lightbox__image');
-const overleyClickByCloseImg = document.querySelector('div.lightbox__overlay');
-const CloseModal = document.querySelector('.lightbox__button');
-
-
-
-GalleryEl.innerHTML = makeGaleryElementMorkup;
-GalleryEl.addEventListener('click', onClickOpenImg);
-CloseModal.addEventListener('click', onClickCloseModal);
-overleyClickByCloseImg.addEventListener('click', onClickOverlayCloseModal);
+refs.gallery.innerHTML = makeGaleryElementMorkup;
+refs.gallery.addEventListener('click', onClickOpenImg);
+refs.closeModal.addEventListener('click', onClickCloseModal);
+refs.overley.addEventListener('click', onClickOverlayCloseModal);
 
 function onClickOpenImg(evt) {
     evt.preventDefault()
@@ -38,17 +37,17 @@ function onClickOpenImg(evt) {
     }
     window.addEventListener('keydown', onKeydownCloseModal);
     
-    modalOnClick.classList.add('is-open');
-    imageItemGallery.src = `${evt.target.dataset.source}`;
-    imageItemGallery.alt = `${evt.target.alt}`;
+    refs.modal.classList.add('is-open');
+    refs.image.src = `${evt.target.dataset.source}`;
+    refs.image.alt = `${evt.target.alt}`;
 
     document.addEventListener('keydown', onKeydowmSibling);
 };
 
 function onClickCloseModal() {
     window.removeEventListener("keydown", onKeydownCloseModal);
-    modalOnClick.classList.remove('is-open');
-    imageItemGallery.src = "";
+    refs.modal.classList.remove('is-open');
+    refs.image.src = "";
 };
 
 function onClickOverlayCloseModal(evt) {
@@ -66,12 +65,15 @@ function onKeydownCloseModal(evt) {
 };
 
 function onKeydowmSibling(evt) {
-    const CurrentEl = gallerysItems.findIndex(({ original }) => original === imageItemGallery.src);
+    const currentEl = gallerysItems.findIndex(({ original }) => original === refs.image.src);
     if (evt.code === 'ArrowRight') {
-        imageItemGallery.src = `${gallerysItems[(CurrentEl + 1) % gallerysItems.length].original}`;
+        refs.image.src = `${gallerysItems[(currentEl + 1) % gallerysItems.length].original}`;
     } else if (evt.code === 'ArrowLeft') {
-        imageItemGallery.src = `${gallerysItems[(CurrentEl - 1) % gallerysItems.length].original}`;
-    }
+        if (currentEl === 0) {
+            refs.image.src = `${gallerysItems[(currentEl + gallerysItems.length - 1) % gallerysItems.length].original}`;
+        } else {
+            refs.image.src = `${gallerysItems[(currentEl - 1) % gallerysItems.length].original}`;
+        };
+    };
     return
-    
 };
