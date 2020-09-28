@@ -41,11 +41,12 @@ function onClickOpenImg(evt) {
     refs.image.src = `${evt.target.dataset.source}`;
     refs.image.alt = `${evt.target.alt}`;
 
-    document.addEventListener('keydown', onKeydowmSibling);
+    window.addEventListener('keydown', onKeydowmSibling);
 };
 
 function onClickCloseModal() {
     window.removeEventListener("keydown", onKeydownCloseModal);
+    window.removeEventListener('keydown', onKeydowmSibling);
     refs.modal.classList.remove('is-open');
     refs.image.src = "";
 };
