@@ -18,28 +18,59 @@ const galerysEl = ({ preview, original, description }) => {
 
 const makeGaleryElementMorkup = gallerysItems.map(galerysEl).join('');
 
-const onGalleryEl = document.querySelector('ul.js-gallery');
-onGalleryEl.innerHTML = makeGaleryElementMorkup;
+const GalleryEl = document.querySelector('ul.js-gallery');
+const modalOnClick = document.querySelector('div.lightbox');
+const imageItemGallery = document.querySelector('img.lightbox__image');
+const overleyClickByCloseImg = document.querySelector('div.lightbox__overlay');
+const CloseModal = document.querySelector('.lightbox__button');
 
-onGalleryEl.addEventListener('click', onClick);
 
-function onClick(evt) {
+
+GalleryEl.innerHTML = makeGaleryElementMorkup;
+const imageItemGalleryAll = document.querySelectorAll('.gallery__item');
+GalleryEl.addEventListener('click', onClickOpenImg);
+CloseModal.addEventListener('click', onClickCloseModal);
+overleyClickByCloseImg.addEventListener('click', onClickOverlayCloseModal);
+
+function onClickOpenImg(evt) {
     evt.preventDefault()
     if (evt.target.nodeName !== 'IMG') {
         return;
     }
-    const ModalOnClick = document.querySelector('div.lightbox');
-    ModalOnClick.classList.add('is-open');
-    const imageItemGallery = document.querySelector('img.lightbox__image');
+    window.addEventListener('keydown', onKeydownCloseModal);
+    
+    modalOnClick.classList.add('is-open');
     imageItemGallery.src = `${evt.target.dataset.source}`;
-    imageItemGallery.alt = `${evt.target.alt}`
-}
+    imageItemGallery.alt = `${evt.target.alt}`;
 
-// const imageOriginalSize = document.querySelector()
-// const closeModalOnClick = document.querySelector('[data-action="close-lightbox]');
-// closeModalOnClick.addEventListener('click', onCloseModal);
-// function onCloseModal() {
-//     ModalOnClick.classList.remove('is-open');
-// }
+    document.addEventListener('keydown', onKeydowmNextSibling);
+};
 
+function onClickCloseModal() {
+    window.removeEventListener("keydown", onKeydownCloseModal);
+    modalOnClick.classList.remove('is-open');
+    imageItemGallery.src = "";
+};
 
+function onClickOverlayCloseModal(evt) {
+    if (evt.currentTarget !== evt.target) {
+        return;
+    };
+    onClickCloseModal();
+};
+
+function onKeydownCloseModal(evt) {
+    if (evt.code !== 'Escape') {
+        return
+    };
+    onClickCloseModal();
+};
+
+function onKeydowmNextSibling(evt) {
+    if (evt.code !== 'ArrowRight') {
+        return
+    };
+    const CurrentEl = gallerysItems.findIndex(x => x.)
+};
+
+console.log(imageItemGalleryAll)
