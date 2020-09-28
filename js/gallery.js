@@ -27,7 +27,6 @@ const CloseModal = document.querySelector('.lightbox__button');
 
 
 GalleryEl.innerHTML = makeGaleryElementMorkup;
-const imageItemGalleryAll = document.querySelectorAll('.gallery__item');
 GalleryEl.addEventListener('click', onClickOpenImg);
 CloseModal.addEventListener('click', onClickCloseModal);
 overleyClickByCloseImg.addEventListener('click', onClickOverlayCloseModal);
