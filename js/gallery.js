@@ -43,7 +43,7 @@ function onClickOpenImg(evt) {
     imageItemGallery.src = `${evt.target.dataset.source}`;
     imageItemGallery.alt = `${evt.target.alt}`;
 
-    document.addEventListener('keydown', onKeydowmNextSibling);
+    document.addEventListener('keydown', onKeydowmSibling);
 };
 
 function onClickCloseModal() {
@@ -66,11 +66,14 @@ function onKeydownCloseModal(evt) {
     onClickCloseModal();
 };
 
-function onKeydowmNextSibling(evt) {
-    if (evt.code !== 'ArrowRight') {
-        return
-    };
-    const CurrentEl = gallerysItems.findIndex(x => x.)
+function onKeydowmSibling(evt) {
+    if (evt.code === 'ArrowRight') {
+        const CurrentEl = gallerysItems.findIndex(({ original }) => original === imageItemGallery.src);
+        imageItemGallery.src = `${gallerysItems[(CurrentEl + 1) % gallerysItems.length].original}`;
+    } else if (evt.code === 'ArrowLeft') {
+        const CurrentEl = gallerysItems.findIndex(({ original }) => original === imageItemGallery.src);
+        imageItemGallery.src = `${gallerysItems[(CurrentEl - 1) % gallerysItems.length].original}`;
+    }
+    return
+    
 };
-
-console.log(imageItemGalleryAll)
