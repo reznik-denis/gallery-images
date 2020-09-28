@@ -66,11 +66,10 @@ function onKeydownCloseModal(evt) {
 };
 
 function onKeydowmSibling(evt) {
+    const CurrentEl = gallerysItems.findIndex(({ original }) => original === imageItemGallery.src);
     if (evt.code === 'ArrowRight') {
-        const CurrentEl = gallerysItems.findIndex(({ original }) => original === imageItemGallery.src);
         imageItemGallery.src = `${gallerysItems[(CurrentEl + 1) % gallerysItems.length].original}`;
     } else if (evt.code === 'ArrowLeft') {
-        const CurrentEl = gallerysItems.findIndex(({ original }) => original === imageItemGallery.src);
         imageItemGallery.src = `${gallerysItems[(CurrentEl - 1) % gallerysItems.length].original}`;
     }
     return
